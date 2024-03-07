@@ -4,7 +4,7 @@
 import { Blazor } from './GlobalExports';
 import { shouldAutoStart } from './BootCommon';
 import { CircuitStartOptions, resolveOptions } from './Platform/Circuits/CircuitStartOptions';
-import { setCircuitOptions, startServer } from './Boot.Server.Common';
+import { setCircuitOptions, startServer, stopServer } from './Boot.Server.Common';
 import { ServerComponentDescriptor, discoverComponents } from './Services/ComponentDescriptorDiscovery';
 import { DotNet } from './Microsoft.JSInterop';
 import { InitialRootComponentsList } from './Services/InitialRootComponentsList';
@@ -14,7 +14,9 @@ let started = false;
 
 function boot(userOptions?: Partial<CircuitStartOptions>): Promise<void> {
   if (started) {
-    throw new Error('Blazor has already started.');
+    //throw new Error('Blazor has already started.');
+
+    stopServer();
   }
   started = true;
 

@@ -21,6 +21,7 @@ let serverStartPromise: Promise<void>;
 let circuitStarting: Promise<boolean> | undefined;
 
 export function setCircuitOptions(initializersReady: Promise<Partial<CircuitStartOptions>>) {
+  /*
   if (options) {
     throw new Error('Circuit options have already been configured.');
   }
@@ -28,6 +29,7 @@ export function setCircuitOptions(initializersReady: Promise<Partial<CircuitStar
   if (options) {
     throw new Error('WebAssembly options have already been configured.');
   }
+  */
 
   initializersPromise = setOptions(initializersReady);
 
@@ -37,10 +39,18 @@ export function setCircuitOptions(initializersReady: Promise<Partial<CircuitStar
   }
 }
 
+export function stopServer(): Promise<void> {
+  //Blazor.disconnect() chiama Blazor.circuit.sendDisconnectBeacon()
+  //questo implicitamente fa come sopra ma fa anche lo stop della connessione
+  return circuit?.dispose();
+}
+
 export function startServer(components: RootComponentManager<ServerComponentDescriptor>): Promise<void> {
+  /*
   if (serverStartPromise !== undefined) {
     throw new Error('Blazor Server has already started.');
   }
+  */
 
   serverStartPromise = new Promise(startServerCore.bind(null, components));
 
@@ -70,6 +80,9 @@ async function startServerCore(components: RootComponentManager<ServerComponentD
 
     return true;
   };
+
+  //[debug] esponiamo all'oggetto blazor il circuito
+  //Blazor.circuit = circuit;
 
   Blazor.defaultReconnectionHandler = new DefaultReconnectionHandler(logger);
   options.reconnectionHandler = options.reconnectionHandler || Blazor.defaultReconnectionHandler;

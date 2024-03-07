@@ -86,6 +86,7 @@ export module DotNet {
    * @param dotNetCallDispatcher An object that can dispatch calls from JavaScript to a .NET runtime.
    */
   export function attachDispatcher(dotNetCallDispatcher: DotNetCallDispatcher): ICallDispatcher {
+    /* seppur JsInterop lo permette, Blazor non consente di avere più CallDispatcher 
       const result = new CallDispatcher(dotNetCallDispatcher);
       if (defaultCallDispatcher === undefined) {
           // This was the first dispatcher registered, so it becomes the default. This exists purely for
@@ -96,8 +97,14 @@ export module DotNet {
           // be no acceptable default, so we nullify the default dispatcher.
           defaultCallDispatcher = null;
       }
+    */
 
-      return result;
+    if (defaultCallDispatcher === undefined)								 
+        defaultCallDispatcher = new CallDispatcher(dotNetCallDispatcher);
+    else
+        defaultCallDispatcher?.setDotNetCallDispatcher(dotNetCallDispatcher);
+                                                                        
+      return defaultCallDispatcher!;
   }
 
   /**
@@ -379,8 +386,15 @@ export module DotNet {
 
       private _nextAsyncCallId = 1; // Start at 1 because zero signals "no response needed"
 
+      private _dotNetCallDispatcher: DotNetCallDispatcher;
+
       // eslint-disable-next-line no-empty-function
-      constructor(private readonly _dotNetCallDispatcher: DotNetCallDispatcher) {
+      constructor(_dotNetCallDispatcher: DotNetCallDispatcher) {
+        this._dotNetCallDispatcher = _dotNetCallDispatcher;
+      }
+
+      setDotNetCallDispatcher(_dotNetCallDispatcher : DotNetCallDispatcher)  {
+        this._dotNetCallDispatcher = _dotNetCallDispatcher;
       }
 
       getDotNetCallDispatcher(): DotNetCallDispatcher {

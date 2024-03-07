@@ -60,6 +60,7 @@ export class CircuitManager implements DotNet.DotNetCallDispatcher {
     this._options = options;
     this._logger = logger;
     this._renderQueue = new RenderQueue(this._logger);
+    //se siamo in restart, andiamo a rimpiazzare il dispatcher esistente (logica interna a attachDispatcher)
     this._dispatcher = DotNet.attachDispatcher(this);
   }
 
@@ -357,5 +358,8 @@ export class CircuitManager implements DotNet.DotNetCallDispatcher {
         handler.onCircuitClosed();
       }
     }
+
+    //andiamo a fare il clean-up dei componenti / event-listener
+    this._renderQueue?.dispose();
   }
 }

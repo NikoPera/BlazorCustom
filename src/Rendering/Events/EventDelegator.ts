@@ -97,6 +97,12 @@ export class EventDelegator {
     return this.eventInfoStore.get(eventHandlerId);
   }
 
+  public removeAllListener(): void {
+    for (var eventHandlerId in this.eventInfoStore.infosByEventHandlerId) {
+      this.removeListener(parseInt(eventHandlerId));
+    }
+  }
+
   public removeListener(eventHandlerId: number): void {
     // This method gets called whenever the .NET-side code reports that a certain event handler
     // has been disposed. However we will already have disposed the info about that handler if
@@ -222,7 +228,7 @@ export class EventDelegator {
 // Responsible for adding and removing the global listener when the number of listeners
 // for a given event name changes between zero and nonzero
 class EventInfoStore {
-  private infosByEventHandlerId: { [eventHandlerId: number]: EventHandlerInfo } = {};
+  public infosByEventHandlerId: { [eventHandlerId: number]: EventHandlerInfo } = {};
 
   private countByEventName: { [eventName: string]: number } = {};
 

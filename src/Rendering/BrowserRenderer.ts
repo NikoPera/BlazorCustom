@@ -83,6 +83,16 @@ export class BrowserRenderer {
     }
   }
 
+  public disposeAllComponents() {
+    for (var componentId in this.childComponentLocations) {
+        this.disposeComponent(parseInt(componentId));
+    }
+  }
+
+  public disposeAllEventHandlers() {
+    this.eventDelegator.removeAllListener();
+  }
+
   public disposeComponent(componentId: number): void {
     if (this.rootComponentIds.delete(componentId)) {
       // When disposing a root component, the container element won't be removed from the DOM (because there's

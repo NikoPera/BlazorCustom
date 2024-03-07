@@ -19,6 +19,7 @@ import { attachWebRendererInterop } from './Rendering/WebRendererInteropMethods'
 import { WebStartOptions } from './Platform/WebStartOptions';
 import { RuntimeAPI } from 'dotnet';
 import { JSEventRegistry } from './Services/JSEventRegistry';
+import { CircuitManager } from './Platform/Circuits/CircuitManager';
 
 // TODO: It's kind of hard to tell which .NET platform(s) some of these APIs are relevant to.
 // It's important to know this information when dealing with the possibility of mulitple .NET platforms being available.
@@ -43,6 +44,8 @@ export interface IBlazor {
   platform?: Platform;
   rootComponents: typeof RootComponentsFunctions;
   runtime: RuntimeAPI,
+  
+  circuit?: CircuitManager,
 
   _internal: {
     navigationManager: typeof navigationManagerInternalFunctions | any;

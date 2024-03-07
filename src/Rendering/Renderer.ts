@@ -51,6 +51,14 @@ export function getRendererer(browserRendererId: number): BrowserRenderer | unde
   return browserRenderers[browserRendererId];
 }
 
+export function dispose(browserRendererId: number) {
+  const browserRenderer = browserRenderers[browserRendererId];
+  if(browserRenderer) {
+    browserRenderer.disposeAllComponents();
+    browserRenderer.disposeAllEventHandlers();
+  }
+}
+
 export function renderBatch(browserRendererId: number, batch: RenderBatch): void {
   const browserRenderer = browserRenderers[browserRendererId];
   if (!browserRenderer) {
