@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 /* eslint-disable array-element-newline */
-import { DotNet } from '@microsoft/dotnet-js-interop';
+import { DotNet } from './Microsoft.JSInterop';
 import { Blazor } from './GlobalExports';
 import * as Environment from './Environment';
 import { BINDING, monoPlatform, dispatcher, getInitializer } from './Platform/Mono/MonoPlatform';

@@ -1,0 +1,3 @@
+per buildare:
+1) installa le dipendenze: yarn install
+2) compila debug e release: yarn run build

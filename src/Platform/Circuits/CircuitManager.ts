@@ -10,7 +10,7 @@ import { RootComponentManager } from '../../Services/RootComponentManager';
 import { CircuitStartOptions } from './CircuitStartOptions';
 import { attachRootComponentToLogicalElement } from '../../Rendering/Renderer';
 import { WebRendererId } from '../../Rendering/WebRendererId';
-import { DotNet } from '@microsoft/dotnet-js-interop';
+import { DotNet } from '../../Microsoft.JSInterop';
 import { MessagePackHubProtocol } from '@microsoft/signalr-protocol-msgpack';
 import { ConsoleLogger } from '../Logging/Loggers';
 import { RenderQueue } from './RenderQueue';
